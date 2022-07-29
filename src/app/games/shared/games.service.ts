@@ -15,7 +15,7 @@ export class GamesService {
    * @returns gets the object found
    */
   public findById(id: any): Observable<Game> {
-    return this.http.get<Game>(this.URL + '/' + id);
+        return this.http.get<Game>(this.URL + '/' + id);
   }
 
   /**

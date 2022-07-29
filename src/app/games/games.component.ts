@@ -1,51 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Router} from '@angular/router';
-import {AppState} from '../app.state';
-import {GET_GAMES} from './store/games.actions';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { AppState } from '../app.state';
+import { GET_GAMES } from './store/games.actions';
 import {
-  getCreateError, getDeleteError, getGamesError, getUpdateError, isCreated, isDeleted,
-  isUpdated
+  getCreateError,
+  getDeleteError,
+  getGamesError,
+  getUpdateError,
+  isCreated,
+  isDeleted,
+  isUpdated,
 } from './store/games.reducers';
-import {GetAllPlatforms} from './store/platforms.actions';
+import { GetAllPlatforms } from './store/platforms.actions';
 
 @Component({
   selector: 'app-games',
   template: `
     <router-outlet></router-outlet>`,
-  styleUrls: ['./games.component.css']
+  styleUrls: ['./games.component.css'],
 })
 export class GamesComponent implements OnInit {
-
-  constructor(private router: Router,
-              private store: Store<AppState>) {
-  }
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
-    console.log('... Initializing Heroes component');
+    //console.log('... Initializing Heroes component');
     //this.store.dispatch(new GetAllGames());
-    this.store.dispatch(new GetAllPlatforms());
+    // this.store.dispatch(new GetAllPlatforms());
 
     // subscriptions when success or error action
-    this.store.select(getGamesError).subscribe((error) => this.loadingError(error));
-    this.store.select(isDeleted).subscribe((done) => {
-      this.actionSuccess(done, 'The game was deleted successfully!!!');
-    });
-    this.store.select(getDeleteError).subscribe((error) => {
-      this.actionError(error, 'Error while deleting the game');
-    });
-    this.store.select(isUpdated).subscribe((done) => {
-      this.actionSuccess(done, 'The game was updated successfully!!!');
-    });
-    this.store.select(getUpdateError).subscribe((error) => {
-      this.actionError(error, 'Error while updating the game');
-    });
-    this.store.select(isCreated).subscribe((done) => {
-      this.actionSuccess(done, 'The game was created successfully!!!');
-    });
-    this.store.select(getCreateError).subscribe((error) => {
-      this.actionError(error, 'Error while creating the game');
-    });
+    // this.store.select(getGamesError).subscribe((error) => this.loadingError(error));
+    // this.store.select(isDeleted).subscribe((done) => {
+    //   this.actionSuccess(done, 'The game was deleted successfully!!!');
+    // });
+    // this.store.select(getDeleteError).subscribe((error) => {
+    //   this.actionError(error, 'Error while deleting the game');
+    // });
+    // this.store.select(isUpdated).subscribe((done) => {
+    //   this.actionSuccess(done, 'The game was updated successfully!!!');
+    // });
+    // this.store.select(getUpdateError).subscribe((error) => {
+    //   this.actionError(error, 'Error while updating the game');
+    // });
+    // this.store.select(isCreated).subscribe((done) => {
+    //   this.actionSuccess(done, 'The game was created successfully!!!');
+    // });
+    // this.store.select(getCreateError).subscribe((error) => {
+    //   this.actionError(error, 'Error while creating the game');
+    // });
   }
 
   /**

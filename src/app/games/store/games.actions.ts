@@ -33,6 +33,11 @@ export const CreateAction = createAction('[GAME] Create', props<{ payload: Game}
 export const CreateSuccessAction = createAction('[GAME] Create Success', props<{ payload: Game}>());
 export const CreateFailureAction = createAction('[GAME] Create Failure', props<{ payload: any}>());
 
+
+export const GetGame = createAction('[GAME] get', props<{ payload: number}>());
+export const GetGameSuccessAction = createAction('[GAME] get Game Success', props<{ payload: Game}>());
+export const GetGameFailureAction = createAction('[GAME] get Game Failure', props<{ payload: any}>());
+
 // export class GetAllGames implements Action {
 //   readonly type = GET_GAMES;
 // }
@@ -51,23 +56,23 @@ export const CreateFailureAction = createAction('[GAME] Create Failure', props<{
 /****************************************
  * GET game by id
  ****************************************/
-export class GetGame implements Action {
-  readonly type = GET_GAME;
+// export class GetGame implements Action {
+//   readonly type = GET_GAME;
 
-  constructor(public payload: number) {}
-}
+//   constructor(public payload: number) {}
+// }
 
-export class GetGameSuccess implements Action {
-  readonly type = GET_GAME_SUCCESS;
+// export class GetGameSuccess implements Action {
+//   readonly type = GET_GAME_SUCCESS;
 
-  constructor(public payload: Game) {}
-}
+//   constructor(public payload: Game) {}
+// }
 
-export class GetGameError implements Action {
-  readonly type = GET_GAME_ERROR;
+// export class GetGameError implements Action {
+//   readonly type = GET_GAME_ERROR;
 
-  constructor(public payload: Error) {}
-}
+//   constructor(public payload: Error) {}
+// }
 
 /****************************************
  * ADD new game

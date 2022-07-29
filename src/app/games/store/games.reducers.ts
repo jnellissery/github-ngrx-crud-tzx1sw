@@ -199,6 +199,13 @@ const _gameReducer = createReducer(
   })),
   on(gameActions.CreateFailureAction, (state, { payload }) => ({
     data: payload,
+  })),
+  on(gameActions.GetGameSuccessAction, (state, { payload }) => (
+     {
+     data: payload
+  })),
+  on(gameActions.GetGameFailureAction, (state, { payload }) => ({
+    data: payload,
   }))
 );
 export function gameReducer(state: any, action: Action) {
@@ -211,6 +218,10 @@ export const getAllGames1 = createSelector(
   (state: State) => state.data
 );
 
+export const getGame1 = createSelector(
+  getGamesState1, 
+  (state: State) => state.data
+);
 /*************************
  * SELECTORS
  ************************/
@@ -221,13 +232,6 @@ export const getAllGames = createSelector(
   (state: State) => state.data
 );
 
-export const getGame = createSelector(getGamesState, (state: State) => {
-  if (state.action === gameActions.GET_GAME && state.done) {
-    return state.selected;
-  } else {
-    return null;
-  }
-});
 export const isDeleted = createSelector(
   getGamesState,
   (state: State) =>
@@ -256,6 +260,6 @@ export const getUpdateError = createSelector(getGamesState, (state: State) => {
 export const getGamesError = createSelector(getGamesState, (state: State) => {
   return state.action === gameActions.GET_GAMES ? state.error : null;
 });
-export const getGameError = createSelector(getGamesState, (state: State) => {
-  return state.action === gameActions.GET_GAME ? state.error : null;
-});
+// export const getGameError = createSelector(getGamesState, (state: State) => {
+//   return state.action === gameActions.GET_GAME ? state.error : null;
+// });
