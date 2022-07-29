@@ -28,6 +28,11 @@ export const ShowAllAction = createAction(GET_GAMES);
 export const ShowAllSuccessAction = createAction(GET_GAMES_SUCCESS, props<{ payload: Game[] }>());
 export const ShowAllFailureAction = createAction(GET_GAMES_ERROR,props<{ payload: Error }>());
 
+
+export const CreateAction = createAction('[GAME] Create', props<{ payload: Game}>());
+export const CreateSuccessAction = createAction('[GAME] Create Success', props<{ payload: Game}>());
+export const CreateFailureAction = createAction('[GAME] Create Failure', props<{ payload: any}>());
+
 // export class GetAllGames implements Action {
 //   readonly type = GET_GAMES;
 // }

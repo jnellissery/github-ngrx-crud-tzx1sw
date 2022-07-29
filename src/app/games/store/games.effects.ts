@@ -5,14 +5,16 @@ import {
   AddGame,
   AddGameError,
   AddGameSuccess,
-  GetAllGamesError,
-  GetAllGamesSuccess,
+  CreateAction,
+  CreateFailureAction,
+  CreateSuccessAction,
   GetGame,
   GetGameError,
   GetGameSuccess,
   RemoveGame,
   RemoveGameError,
   RemoveGameSuccess,
+  ShowAllAction,
   ShowAllFailureAction,
   ShowAllSuccessAction,
   UpdateGame,
@@ -31,7 +33,7 @@ export class GameEffects {
 
   @Effect()
   getAllGames$: Observable<Action> = this.actions$.pipe(
-    ofType(gameActions.GET_GAMES),
+    ofType(ShowAllAction),
     switchMap(() => this.svc.findAll()),
     map(
       (heroes) => ShowAllSuccessAction({ payload: heroes }),
@@ -59,11 +61,13 @@ export class GameEffects {
 
   @Effect()
   createGame$ = this.actions$.pipe(
-    ofType(gameActions.CREATE_GAME),
-    map((action: AddGame) => action.payload),
+    ofType(CreateAction),
+    map((action) => action.payload),
     switchMap((newGame) => this.svc.insert(newGame)),
-    map((response) => new AddGameSuccess(response.id)),
-    catchError((err) => [new AddGameError(err)])
+    map(
+      (game) => CreateSuccessAction({ payload: game }),
+      catchError((err) => of(CreateFailureAction({ payload: err })))
+    )
   );
 
   @Effect()

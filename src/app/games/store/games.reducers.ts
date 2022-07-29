@@ -48,12 +48,12 @@ export function reducer(state = initialState, action: AppAction): State {
     //     error: null,
     //   };
     // case gameActions.GET_GAMES_ERROR:
-      // return {
-      //   ...state,
-      //   done: true,
-      //   selected: null,
-      //   error: action.payload,
-      // };
+    // return {
+    //   ...state,
+    //   done: true,
+    //   selected: null,
+    //   error: action.payload,
+    // };
 
     /*************************
      * GET game by id actions
@@ -92,27 +92,27 @@ export function reducer(state = initialState, action: AppAction): State {
     //     done: false,
     //     error: null,
     //   };
-    case gameActions.CREATE_GAME_SUCCESS: {
-      const newGame = {
-        ...state.selected,
-        id: action.payload,
-      };
-      const data = [...state.data, newGame];
-      return {
-        ...state,
-        data,
-        selected: null,
-        error: null,
-        done: true,
-      };
-    }
-    case gameActions.CREATE_GAME_ERROR:
-      return {
-        ...state,
-        selected: null,
-        done: true,
-        error: action.payload,
-      };
+    // case gameActions.CREATE_GAME_SUCCESS: {
+    //   const newGame = {
+    //     ...state.selected,
+    //     id: action.payload,
+    //   };
+    //   const data = [...state.data, newGame];
+    //   return {
+    //     ...state,
+    //     data,
+    //     selected: null,
+    //     error: null,
+    //     done: true,
+    //   };
+    // }
+    // case gameActions.CREATE_GAME_ERROR:
+    //   return {
+    //     ...state,
+    //     selected: null,
+    //     done: true,
+    //     error: action.payload,
+    //   };
 
     /*************************
      * UPDATE game actions
@@ -193,6 +193,12 @@ const _gameReducer = createReducer(
   on(gameActions.ShowAllFailureAction, (state, { payload }) => ({
     data: [],
     message: 'ShowAll Failure',
+  })),
+  on(gameActions.CreateSuccessAction, (state, { payload }) => ({
+    data: [payload],
+  })),
+  on(gameActions.CreateFailureAction, (state, { payload }) => ({
+    data: payload,
   }))
 );
 export function gameReducer(state: any, action: Action) {

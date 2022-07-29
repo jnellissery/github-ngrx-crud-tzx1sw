@@ -4,7 +4,7 @@ import { Platform } from '../shared/platform';
 import { PlatformsService } from '../shared/platforms.service';
 import { AppState } from '../../app.state';
 import { Store } from '@ngrx/store';
-import { AddGame } from '../store/games.actions';
+import * as gameaction from '../store/games.actions';
 import { Router } from '@angular/router';
 
 @Component({
@@ -40,11 +40,12 @@ export class GameCreateComponent implements OnInit {
    * Create a new hero
    */
   onSaveGame() {
+    console.log(this.game)
     // this.game.platforms = this.platforms
     //   .filter((p) => p.checked === true)
     //   .map(p => p.id);
     //   console.log(this.game);
-    this.store.dispatch(new AddGame(this.game));
+    this.store.dispatch(gameaction.CreateAction({ payload: this.game }));
   }
 
   reset() {
