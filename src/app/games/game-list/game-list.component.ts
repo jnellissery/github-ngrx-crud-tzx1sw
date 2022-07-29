@@ -4,7 +4,7 @@ import { AppState } from '../../app.state';
 import { Game } from '../shared/game';
 import { Observable } from 'rxjs';
 import * as gameActions from '../store/games.actions';
-import {  getAllGames1 } from '../store/games.reducers';
+import { getAllGames1 } from '../store/games.reducers';
 import { PlatformsService } from '../shared/platforms.service';
 import { Platform } from '../shared/platform';
 import { getAllPlatforms } from '../store/platforms.reducers';
@@ -23,12 +23,12 @@ export class GameListComponent implements OnInit {
     private platformService: PlatformsService,
     private store: Store<AppState>
   ) {
+    console.log('... initializing Hero list component.getAllGames1');
     this.games = this.store.select(getAllGames1);
     this.platforms = this.store.select(getAllPlatforms);
   }
 
   ngOnInit() {
-    console.log('... initializing Hero list component.getAllGames1');
     this.store.dispatch(gameActions.ShowAllAction());
   }
 
@@ -39,6 +39,5 @@ export class GameListComponent implements OnInit {
     if (confirm('Are you sure do you want to delete this Game?')) {
       this.store.dispatch(new gameActions.RemoveGame(id));
     }
-    
   }
 }
