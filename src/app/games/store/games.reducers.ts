@@ -28,7 +28,6 @@ const initialState: State = {
 export function reducer(state = initialState, action: AppAction): State {
   // ...state create immutable state object
   switch (action.type) {
-
     case gameActions.UPDATE_GAME:
       return {
         ...state,
@@ -63,41 +62,56 @@ export function reducer(state = initialState, action: AppAction): State {
         error: action.payload,
       };
 
- 
-   
-  return state;
-}
+      return state;
+  }
 }
 
 const _gameReducer = createReducer(
   initialState,
-  on(gameActions.ShowAllSuccessAction, (state, { payload }) => ({
-    data: payload,
+  on(gameActions.ShowAllAction, (state) => ({
+    ...state,
   })),
+  on(gameActions.ShowAllSuccessAction, (state, { payload }) => {
+    return {
+      ...state,
+      data: payload
+    };
+  }),
   on(gameActions.ShowAllFailureAction, (state, { payload }) => ({
+    ...state,
     data: [],
     message: 'ShowAll Failure',
   })),
   on(gameActions.CreateSuccessAction, (state, { payload }) => ({
+    ...state,
     data: [payload],
   })),
   on(gameActions.CreateFailureAction, (state, { payload }) => ({
+    ...state,
     data: payload,
   })),
-  on(gameActions.GetGameSuccessAction, (state, { payload }) => (
-     {
-     data: payload
+  on(gameActions.GetGameSuccessAction, (state, { payload }) => ({
+    ...state,
+    data: payload,
   })),
   on(gameActions.GetGameFailureAction, (state, { payload }) => ({
+    ...state,
     data: payload,
   })),
-  on(gameActions.RemoveGameSuccess, (state, { payload }) => (
-    {
-    data: payload
- })),
- on(gameActions.RemoveGameFailure, (state, { payload }) => ({
-   data: payload,
- }))
+  on(gameActions.RemoveGame, (state) => ({
+    ...state,
+    data: state.data
+  })),
+  on(gameActions.RemoveGameSuccess, (state, { payload }) => {
+    const selecteduser = state;
+    console.log(selecteduser);
+    return { ...state, data: selecteduser };
+  }),
+
+  on(gameActions.RemoveGameFailure, (state, { payload }) => ({
+    ...state,
+    data: payload,
+  }))
 );
 export function gameReducer(state: any, action: Action) {
   return _gameReducer(state, action);
@@ -110,7 +124,7 @@ export const getAllGames1 = createSelector(
 );
 
 export const getGame1 = createSelector(
-  getGamesState1, 
+  getGamesState1,
   (state: State) => state.data
 );
 /*************************
@@ -138,5 +152,3 @@ export const isUpdated = createSelector(
   (state: State) =>
     state.action === gameActions.UPDATE_GAME && state.done && !state.error
 );
-
-

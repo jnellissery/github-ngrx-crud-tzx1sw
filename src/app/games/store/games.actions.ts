@@ -25,24 +25,52 @@ export const UPDATE_GAME_ERROR = '[UPDATE] Game Error';
  * GET all the games
  ****************************************/
 export const ShowAllAction = createAction(GET_GAMES);
-export const ShowAllSuccessAction = createAction(GET_GAMES_SUCCESS, props<{ payload: Game[] }>());
-export const ShowAllFailureAction = createAction(GET_GAMES_ERROR,props<{ payload: Error }>());
+export const ShowAllSuccessAction = createAction(
+  GET_GAMES_SUCCESS,
+  props<{ payload: Game[] }>()
+);
+export const ShowAllFailureAction = createAction(
+  GET_GAMES_ERROR,
+  props<{ payload: Error }>()
+);
 
+export const CreateAction = createAction(
+  '[GAME] Create',
+  props<{ payload: Game }>()
+);
+export const CreateSuccessAction = createAction(
+  '[GAME] Create Success',
+  props<{ payload: Game }>()
+);
+export const CreateFailureAction = createAction(
+  '[GAME] Create Failure',
+  props<{ payload: any }>()
+);
 
-export const CreateAction = createAction('[GAME] Create', props<{ payload: Game}>());
-export const CreateSuccessAction = createAction('[GAME] Create Success', props<{ payload: Game}>());
-export const CreateFailureAction = createAction('[GAME] Create Failure', props<{ payload: any}>());
-
-
-export const GetGame = createAction('[GAME] get', props<{ payload: number}>());
-export const GetGameSuccessAction = createAction('[GAME] get Game Success', props<{ payload: Game}>());
-export const GetGameFailureAction = createAction('[GAME] get Game Failure', props<{ payload: any}>());
+export const GetGame = createAction('[GAME] get', props<{ payload: number }>());
+export const GetGameSuccessAction = createAction(
+  '[GAME] get Game Success',
+  props<{ payload: Game }>()
+);
+export const GetGameFailureAction = createAction(
+  '[GAME] get Game Failure',
+  props<{ payload: any }>()
+);
 /****************************************
  * REMOVE a game by id
  ****************************************/
- export const RemoveGame = createAction('[GAME] get', props<{ payload: number}>());
- export const RemoveGameSuccess = createAction('[GAME] get Game Success', props<{ payload: Game}>());
- export const RemoveGameFailure = createAction('[GAME] get Game Failure', props<{ payload: any}>());
+export const RemoveGame = createAction(
+  '[GAME] get',
+  props<{ payload: number }>()
+);
+export const RemoveGameSuccess = createAction(
+  '[GAME] get Game Success',
+  props<{ payload: number }>()
+);
+export const RemoveGameFailure = createAction(
+  '[GAME] get Game Failure',
+  props<{ payload: any }>()
+);
 
 /****************************************
  * UPDATE game by id

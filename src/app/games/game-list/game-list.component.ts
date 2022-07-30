@@ -23,7 +23,6 @@ export class GameListComponent implements OnInit {
     private platformService: PlatformsService,
     private store: Store<AppState>
   ) {
-    console.log('... initializing Hero list component.getAllGames1');
     this.games = this.store.select(getAllGames1);
     this.platforms = this.store.select(getAllPlatforms);
   }
@@ -33,7 +32,7 @@ export class GameListComponent implements OnInit {
   }
   delete(id: number) {
     if (confirm('Are you sure do you want to delete this Game?')) {
-      this.store.dispatch(gameActions.RemoveGame({ payload: id }));
+     this.store.dispatch(gameActions.RemoveGame({ payload: id }));
     }
   }
 }

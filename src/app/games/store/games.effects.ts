@@ -9,7 +9,7 @@ import {
   GetGameFailureAction,
   GetGameSuccessAction,
   RemoveGame,
-  RemoveGameError,
+  RemoveGameFailure,
   RemoveGameSuccess,
   ShowAllAction,
   ShowAllFailureAction,
@@ -73,13 +73,20 @@ export class GameEffects {
       catchError((err) => [new UpdateGameError(err)])
     )
   );
+
   removeGame$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RemoveGame),
-      map((action) => action.payload),
-      switchMap((id) => this.svc.delete(id)),
-      map((game: Game) => RemoveGameSuccess({payload:game}),
-      catchError((err) => of( RemoveGameError(err)))),
-      )
+      switchMap((action) => {
+        return this.svc.delete(action.payload).pipe(
+          map((item: any) => {
+            return RemoveGameSuccess({ payload: action.payload });
+          }),
+          catchError((error) => {
+            return of(RemoveGameFailure({ payload: error }));
+          })
+        );
+      })
+    )
   );
 }
