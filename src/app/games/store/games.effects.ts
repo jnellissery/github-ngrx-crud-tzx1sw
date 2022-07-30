@@ -75,11 +75,11 @@ export class GameEffects {
   );
   removeGame$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(gameActions.DELETE_GAME),
-      map((action: RemoveGame) => action.payload),
+      ofType(RemoveGame),
+      map((action) => action.payload),
       switchMap((id) => this.svc.delete(id)),
-      map((hero: Game) => new RemoveGameSuccess(hero)),
-      catchError((err) => [new RemoveGameError(err)])
-    )
+      map((game: Game) => RemoveGameSuccess({payload:game}),
+      catchError((err) => of( RemoveGameError(err)))),
+      )
   );
 }

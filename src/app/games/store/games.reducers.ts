@@ -28,95 +28,7 @@ const initialState: State = {
 export function reducer(state = initialState, action: AppAction): State {
   // ...state create immutable state object
   switch (action.type) {
-    /*************************
-     * GET all games actions
-     ************************/
-    // case gameActions.GET_GAMES:
-    //   return {
-    //     ...state,
-    //     action: gameActions.GET_GAMES,
-    //     done: false,
-    //     selected: null,
-    //     error: null
-    //   };
-    // case gameActions.GET_GAMES_SUCCESS:
-    //   return {
-    //     ...state,
-    //     data: action.payload,
-    //     done: true,
-    //     selected: null,
-    //     error: null,
-    //   };
-    // case gameActions.GET_GAMES_ERROR:
-    // return {
-    //   ...state,
-    //   done: true,
-    //   selected: null,
-    //   error: action.payload,
-    // };
 
-    /*************************
-     * GET game by id actions
-     ************************
-    case gameActions.GET_GAME:
-      return {
-        ...state,
-        action: gameActions.GET_GAME,
-        done: false,
-        selected: null,
-        error: null,
-      };
-    case gameActions.GET_GAME_SUCCESS:
-      return {
-        ...state,
-        selected: action.payload,
-        done: true,
-        error: null,
-      };
-    case gameActions.GET_GAME_ERROR:
-      return {
-        ...state,
-        selected: null,
-        done: true,
-        error: action.payload,
-      };
-
-    /*************************
-     * CREATE game actions
-     ************************/
-    // case gameActions.CREATE_GAME:
-    //   return {
-    //     ...state,
-    //     selected: action.payload,
-    //     action: gameActions.CREATE_GAME,
-    //     done: false,
-    //     error: null,
-    //   };
-    // case gameActions.CREATE_GAME_SUCCESS: {
-    //   const newGame = {
-    //     ...state.selected,
-    //     id: action.payload,
-    //   };
-    //   const data = [...state.data, newGame];
-    //   return {
-    //     ...state,
-    //     data,
-    //     selected: null,
-    //     error: null,
-    //     done: true,
-    //   };
-    // }
-    // case gameActions.CREATE_GAME_ERROR:
-    //   return {
-    //     ...state,
-    //     selected: null,
-    //     done: true,
-    //     error: action.payload,
-    //   };
-
-    /*************************
-     * UPDATE game actions
-     ************************/
     case gameActions.UPDATE_GAME:
       return {
         ...state,
@@ -151,38 +63,10 @@ export function reducer(state = initialState, action: AppAction): State {
         error: action.payload,
       };
 
-    /*************************
-     * DELETE game actions
-     ************************/
-    case gameActions.DELETE_GAME: {
-      const selected = state.data.find((h) => h.id === action.payload);
-      return {
-        ...state,
-        selected,
-        action: gameActions.DELETE_GAME,
-        done: false,
-        error: null,
-      };
-    }
-    case gameActions.DELETE_GAME_SUCCESS: {
-      const data = state.data.filter((h) => h.id !== state.selected.id);
-      return {
-        ...state,
-        data,
-        selected: null,
-        error: null,
-        done: true,
-      };
-    }
-    case gameActions.DELETE_GAME_ERROR:
-      return {
-        ...state,
-        selected: null,
-        done: true,
-        error: action.payload,
-      };
-  }
+ 
+   
   return state;
+}
 }
 
 const _gameReducer = createReducer(
@@ -206,7 +90,14 @@ const _gameReducer = createReducer(
   })),
   on(gameActions.GetGameFailureAction, (state, { payload }) => ({
     data: payload,
-  }))
+  })),
+  on(gameActions.RemoveGameSuccess, (state, { payload }) => (
+    {
+    data: payload
+ })),
+ on(gameActions.RemoveGameFailure, (state, { payload }) => ({
+   data: payload,
+ }))
 );
 export function gameReducer(state: any, action: Action) {
   return _gameReducer(state, action);
@@ -248,18 +139,4 @@ export const isUpdated = createSelector(
     state.action === gameActions.UPDATE_GAME && state.done && !state.error
 );
 
-export const getDeleteError = createSelector(getGamesState, (state: State) => {
-  return state.action === gameActions.DELETE_GAME ? state.error : null;
-});
-export const getCreateError = createSelector(getGamesState, (state: State) => {
-  return state.action === gameActions.CREATE_GAME ? state.error : null;
-});
-export const getUpdateError = createSelector(getGamesState, (state: State) => {
-  return state.action === gameActions.UPDATE_GAME ? state.error : null;
-});
-export const getGamesError = createSelector(getGamesState, (state: State) => {
-  return state.action === gameActions.GET_GAMES ? state.error : null;
-});
-// export const getGameError = createSelector(getGamesState, (state: State) => {
-//   return state.action === gameActions.GET_GAME ? state.error : null;
-// });
+

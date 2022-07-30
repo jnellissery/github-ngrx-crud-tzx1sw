@@ -31,13 +31,9 @@ export class GameListComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(gameActions.ShowAllAction());
   }
-
-  /**
-   * Delete the selected hero
-   */
   delete(id: number) {
     if (confirm('Are you sure do you want to delete this Game?')) {
-      this.store.dispatch(new gameActions.RemoveGame(id));
+      this.store.dispatch(gameActions.RemoveGame({ payload: id }));
     }
   }
 }
