@@ -34,7 +34,8 @@ export class GameEffects {
       map(
         (heroes) => ShowAllSuccessAction({ payload: heroes }),
         catchError((err) => of(ShowAllFailureAction({ payload: err })))
-      ))
+      )
+    )
   );
   getGame$ = createEffect(() =>
     this.actions$.pipe(
@@ -63,22 +64,22 @@ export class GameEffects {
       )
     )
   );
-
-  @Effect()
-  updateGame$ = this.actions$.pipe(
-    ofType(gameActions.UPDATE_GAME),
-    map((action: UpdateGame) => action.payload),
-    switchMap((game) => this.svc.update(game)),
-    map(() => new UpdateGameSuccess()),
-    catchError((err) => [new UpdateGameError(err)])
+  updateGame$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gameActions.UPDATE_GAME),
+      map((action: UpdateGame) => action.payload),
+      switchMap((game) => this.svc.update(game)),
+      map(() => new UpdateGameSuccess()),
+      catchError((err) => [new UpdateGameError(err)])
+    )
   );
-
-  @Effect()
-  removeGame$ = this.actions$.pipe(
-    ofType(gameActions.DELETE_GAME),
-    map((action: RemoveGame) => action.payload),
-    switchMap((id) => this.svc.delete(id)),
-    map((hero: Game) => new RemoveGameSuccess(hero)),
-    catchError((err) => [new RemoveGameError(err)])
+  removeGame$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gameActions.DELETE_GAME),
+      map((action: RemoveGame) => action.payload),
+      switchMap((id) => this.svc.delete(id)),
+      map((hero: Game) => new RemoveGameSuccess(hero)),
+      catchError((err) => [new RemoveGameError(err)])
+    )
   );
 }
