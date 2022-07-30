@@ -2,16 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import * as gameActions from './games.actions';
 import {
-  AddGame,
-  AddGameError,
-  AddGameSuccess,
   CreateAction,
   CreateFailureAction,
   CreateSuccessAction,
   GetGame,
-  GetGameError,
   GetGameFailureAction,
-  GetGameSuccess,
   GetGameSuccessAction,
   RemoveGame,
   RemoveGameError,
@@ -32,46 +27,42 @@ import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
 @Injectable()
 export class GameEffects {
   constructor(private actions$: Actions, private svc: GamesService) {}
-
-  @Effect()
-  getAllGames$: Observable<Action> = this.actions$.pipe(
-    ofType(ShowAllAction),
-    switchMap(() => this.svc.findAll()),
-    map(
-      (heroes) => ShowAllSuccessAction({ payload: heroes }),
-      catchError((err) => of(ShowAllFailureAction({ payload: err })))
-    )
+  getAllGames$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShowAllAction),
+      switchMap(() => this.svc.findAll()),
+      map(
+        (heroes) => ShowAllSuccessAction({ payload: heroes }),
+        catchError((err) => of(ShowAllFailureAction({ payload: err })))
+      ))
   );
-
   getGame$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(GetGame),
-	debounceTime(500),
-    map((action) => action.payload),
-    switchMap((id) => this.svc.findById(id).pipe (
-	map((res) => {
-            if (res )
-              return GetGameSuccessAction({ payload: res });
+    this.actions$.pipe(
+      ofType(GetGame),
+      debounceTime(500),
+      map((action) => action.payload),
+      switchMap((id) =>
+        this.svc.findById(id).pipe(
+          map((res) => {
+            if (res) return GetGameSuccessAction({ payload: res });
             else throw Error;
           }),
-          catchError((error) =>
-            of(GetGameFailureAction({ payload: error }))
-          )
+          catchError((error) => of(GetGameFailureAction({ payload: error })))
         )
-		)
-     
-  ));
-
-  // @Effect()
-  // getGame$ = this.actions$.pipe(
-  //   ofType(GetGame),
-  //   map((action) => action.payload),
-  //   switchMap((id) => this.svc.findById(id)),
-  //   map((hero) => {
-  //     GetGameSuccessAction({ payload: hero });
-  //   }),
-  //   catchError((err) => of(GetGameFailureAction({ payload: err })))
-  // );
+      )
+    )
+  );
+  createGame$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CreateAction),
+      map((action) => action.payload),
+      switchMap((newGame) => this.svc.insert(newGame)),
+      map(
+        (game) => CreateSuccessAction({ payload: game }),
+        catchError((err) => of(CreateFailureAction({ payload: err })))
+      )
+    )
+  );
 
   @Effect()
   updateGame$ = this.actions$.pipe(
@@ -80,17 +71,6 @@ export class GameEffects {
     switchMap((game) => this.svc.update(game)),
     map(() => new UpdateGameSuccess()),
     catchError((err) => [new UpdateGameError(err)])
-  );
-
-  @Effect()
-  createGame$ = this.actions$.pipe(
-    ofType(CreateAction),
-    map((action) => action.payload),
-    switchMap((newGame) => this.svc.insert(newGame)),
-    map(
-      (game) => CreateSuccessAction({ payload: game }),
-      catchError((err) => of(CreateFailureAction({ payload: err })))
-    )
   );
 
   @Effect()
