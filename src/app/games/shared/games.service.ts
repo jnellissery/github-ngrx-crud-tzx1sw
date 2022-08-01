@@ -15,7 +15,7 @@ export class GamesService {
    * @returns gets the object found
    */
   public findById(id: any): Observable<Game> {
-        return this.http.get<Game>(this.URL + '/' + id);
+    return this.http.get<Game>(this.URL + '/' + id);
   }
 
   /**
@@ -43,7 +43,7 @@ export class GamesService {
   public insert(data: Game): Observable<Game> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-    console.log('service',data);
+    console.log('service', data);
 
     return this.http.post<Game>(this.URL, data, { headers });
   }

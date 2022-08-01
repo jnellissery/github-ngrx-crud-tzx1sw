@@ -30,9 +30,9 @@ export class GameListComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(gameActions.ShowAllAction());
   }
-  delete(id: number) {
+  delete(game: Game) {
     if (confirm('Are you sure do you want to delete this Game?')) {
-     this.store.dispatch(gameActions.RemoveGame({ payload: id }));
+      this.store.dispatch(gameActions.RemoveGame({ payload: game }));
     }
   }
 }

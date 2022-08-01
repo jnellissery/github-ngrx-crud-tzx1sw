@@ -60,33 +60,28 @@ export const GetGameFailureAction = createAction(
  * REMOVE a game by id
  ****************************************/
 export const RemoveGame = createAction(
-  '[GAME] get',
-  props<{ payload: number }>()
+  '[DELETE] Game',
+  props<{ payload: Game }>()
 );
 export const RemoveGameSuccess = createAction(
-  '[GAME] get Game Success',
-  props<{ payload: number }>()
+  '[DELETE] Game Success',
+  props<{ payload: Game }>()
 );
 export const RemoveGameFailure = createAction(
-  '[GAME] get Game Failure',
+  '[DELETE] Game Error',
   props<{ payload: any }>()
 );
 
 /****************************************
  * UPDATE game by id
  ****************************************/
-export class UpdateGame implements Action {
-  readonly type = UPDATE_GAME;
 
-  constructor(public payload: Game) {}
-}
-
-export class UpdateGameSuccess implements Action {
-  readonly type = UPDATE_GAME_SUCCESS;
-}
-
-export class UpdateGameError implements Action {
-  readonly type = UPDATE_GAME_ERROR;
-
-  constructor(public payload: Error) {}
-}
+export const UpdateGame = createAction(UPDATE_GAME, props<{ payload: Game }>());
+export const UpdateGameSuccess = createAction(
+  UPDATE_GAME_SUCCESS,
+  props<{ payload: Game }>()
+);
+export const UpdateGameFailure = createAction(
+  UPDATE_GAME_ERROR,
+  props<{ payload: Error }>()
+);

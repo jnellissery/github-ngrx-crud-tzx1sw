@@ -15,7 +15,7 @@ import {
   ShowAllFailureAction,
   ShowAllSuccessAction,
   UpdateGame,
-  UpdateGameError,
+  UpdateGameFailure,
   UpdateGameSuccess,
 } from './games.actions';
 import { Observable, of } from 'rxjs';
@@ -74,12 +74,28 @@ export class GameEffects {
     )
   );
 
-  removeGame$ = createEffect(() =>
+  updateRequestEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UpdateGame),
+      switchMap((action) => {
+        return this.svc.update(action.payload).pipe(
+          map((item: any) => {
+            return UpdateGameSuccess({ payload: item });
+          }),
+          catchError((error) => {
+            return of(UpdateGameFailure({ payload: error }));
+          })
+        );
+      })
+    )
+  );
+
+  deleteRequestEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RemoveGame),
       switchMap((action) => {
-        return this.svc.delete(action.payload).pipe(
-          map((item: any) => {
+        return this.svc.delete(action.payload.id).pipe(
+          map(() => {
             return RemoveGameSuccess({ payload: action.payload });
           }),
           catchError((error) => {

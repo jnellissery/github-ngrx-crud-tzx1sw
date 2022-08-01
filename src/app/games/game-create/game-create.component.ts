@@ -40,11 +40,11 @@ export class GameCreateComponent implements OnInit {
    * Create a new hero
    */
   onSaveGame() {
-    console.log(this.game)
-    // this.game.platforms = this.platforms
-    //   .filter((p) => p.checked === true)
-    //   .map(p => p.id);
-    //   console.log(this.game);
+    console.log(this.game);
+    this.game.platforms = this.platforms
+      .filter((p) => p.checked === true)
+      .map((p) => p.id);
+    console.log(this.game);
     this.store.dispatch(gameaction.CreateAction({ payload: this.game }));
   }
 
