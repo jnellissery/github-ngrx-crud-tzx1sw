@@ -26,12 +26,6 @@ const initialState: State = {
 };
 export const gameReducer = createReducer(
   initialState,
-  on(gameActions.ShowAllAction, (state: State) => {
-    return {
-      ...state,
-      data: state.data,
-    };
-  }),
   on(gameActions.ShowAllSuccessAction, (state, { payload }) => {
     return {
       ...state,
@@ -40,26 +34,25 @@ export const gameReducer = createReducer(
   }),
   on(gameActions.ShowAllFailureAction, (state, { payload }) => ({
     ...state,
-    data: [],
-    message: 'ShowAll Failure',
+    error: payload,
   })),
   on(gameActions.CreateSuccessAction, (state, { payload }) => ({
     ...state,
-    data: [payload],
+    selected: payload,
   })),
   on(gameActions.CreateFailureAction, (state, { payload }) => ({
     ...state,
-    data: payload,
+    error: payload,
   })),
   on(gameActions.GetGameSuccessAction, (state, { payload }) => {
     return {
       ...state,
-    data: payload
-  }
+      selected: payload,
+    };
   }),
   on(gameActions.GetGameFailureAction, (state, { payload }) => ({
     ...state,
-    data: payload,
+    error: payload,
   })),
   on(gameActions.RemoveGameSuccess, (state: State, { payload }) => {
     const data = state.data.filter((h) => h.id !== payload.id);
@@ -70,20 +63,17 @@ export const gameReducer = createReducer(
   }),
   on(gameActions.RemoveGameFailure, (state, { payload }) => ({
     ...state,
-    data: payload,
+    error: payload,
   })),
   on(gameActions.UpdateGameSuccess, (state, { payload }) => {
-    const data = payload;
-    console.log('updated', payload);
     return {
       ...state,
-      data,
+      selected: payload,
     };
   }),
-  on(gameActions.UpdateGameFailure, (state, { payload }) => ({
-    ...state,
-    data: payload,
-  }))
+  on(gameActions.UpdateGameFailure, (state, { payload }) => {
+    return { ...state, error: payload };
+  })
 );
 export const getGamesState1 = createFeatureSelector<State>('gamereducer');
 export const getAllGames1 = createSelector(
@@ -92,5 +82,5 @@ export const getAllGames1 = createSelector(
 );
 export const getGame1 = createSelector(
   getGamesState1,
-  (state: State) => state.data
+  (state: State) => state.selected
 );

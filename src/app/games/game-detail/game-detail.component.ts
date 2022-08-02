@@ -6,7 +6,7 @@ import * as gameActions from '../store/games.actions';
 import { GetGame } from '../store/games.actions';
 import { Observable } from 'rxjs';
 import { Game } from '../shared/game';
-import { getGame, getGame1 } from '../store/games.reducers';
+import { getGame1 } from '../store/games.reducers';
 import { Platform } from '../shared/platform';
 import { getAllPlatforms } from '../store/platforms.reducers';
 
@@ -23,21 +23,19 @@ export class GameDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {
     this.game = this.store.select(getGame1);
     this.platforms = this.store.select(getAllPlatforms);
-    
   }
 
   ngOnInit() {
-    this.route.params.subscribe(param=>{
-    this.store.dispatch(GetGame({ payload:param.id}));
-  })
-
-}
+    this.route.params.subscribe((param) => {
+      this.store.dispatch(GetGame({ payload: param.id }));
+    });
+  }
   /**
    * Delete the selected hero
    */
   delete(game) {
     if (confirm('Are you sure do you want to delete this Game?')) {
-      this.store.dispatch(gameActions.RemoveGame({payload:game}));
+      this.store.dispatch(gameActions.RemoveGame({ payload: game }));
     }
   }
 }
