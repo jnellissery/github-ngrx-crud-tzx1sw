@@ -8,6 +8,7 @@ import { getAllGames1 } from '../store/games.reducers';
 import { PlatformsService } from '../shared/platforms.service';
 import { Platform } from '../shared/platform';
 import { getAllPlatforms } from '../store/platforms.reducers';
+import { GetAllPlatforms } from '../store/platforms.actions';
 
 @Component({
   selector: 'app-game-list',
@@ -28,6 +29,7 @@ export class GameListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(new GetAllPlatforms());
     this.store.dispatch(gameActions.ShowAllAction());
   }
   delete(game: Game) {

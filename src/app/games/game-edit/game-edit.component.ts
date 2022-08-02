@@ -31,16 +31,18 @@ export class GameEditComponent implements OnInit {
     });
     this.store.select(getAllPlatforms).subscribe((result) => {
       this.platforms = result;
+      console.log(result);
     });
-    // this.store.select(getGame1).subscribe((game) => {
-    //   if (game != null) {
-    //     this.game = game;
-    //     this.platforms = this.platforms.map((p) => {
-    //       p.checked = game.platforms.indexOf(p.id) >= 0;
-    //       return p;
-    //     });
-    //   }
-    // });
+    this.store.select(getGame1).subscribe((game) => {
+      if (game != null) {
+        this.game = game;
+
+        this.platforms = this.platforms.map((p) => {
+          p.checked = game.platforms.indexOf(p.id) >= 0;
+          return p;
+        });
+      }
+    });
   }
 
   /**
