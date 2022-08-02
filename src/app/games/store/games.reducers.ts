@@ -51,10 +51,12 @@ export const gameReducer = createReducer(
     ...state,
     data: payload,
   })),
-  on(gameActions.GetGameSuccessAction, (state, { payload }) => ({
-    ...state,
-    data: payload,
-  })),
+  on(gameActions.GetGameSuccessAction, (state, { payload }) => {
+    return {
+      ...state,
+    data: payload
+  }
+  }),
   on(gameActions.GetGameFailureAction, (state, { payload }) => ({
     ...state,
     data: payload,
@@ -90,5 +92,5 @@ export const getAllGames1 = createSelector(
 );
 export const getGame1 = createSelector(
   getGamesState1,
-  (state: State) => state.selected
+  (state: State) => state.data
 );

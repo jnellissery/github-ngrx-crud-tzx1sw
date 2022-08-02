@@ -45,6 +45,7 @@ export class GameEffects {
       switchMap((id) =>
         this.svc.findById(id).pipe(
           map((res) => {
+            
             if (res) return GetGameSuccessAction({ payload: res });
             else throw Error;
           }),

@@ -23,16 +23,15 @@ export class GameDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {
     this.game = this.store.select(getGame1);
     this.platforms = this.store.select(getAllPlatforms);
+    
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.store.dispatch(GetGame({ payload: 1 }));
-    }, 1000);
+    this.route.params.subscribe(param=>{
+    this.store.dispatch(GetGame({ payload:param.id}));
+  })
 
-    //
-  }
-
+}
   /**
    * Delete the selected hero
    */
