@@ -36,9 +36,9 @@ export class GameDetailComponent implements OnInit {
   /**
    * Delete the selected hero
    */
-  delete(id: number) {
+  delete(game) {
     if (confirm('Are you sure do you want to delete this Game?')) {
-      this.store.dispatch(new gameActions.RemoveGame(id));
+      this.store.dispatch(gameActions.RemoveGame({payload:game}));
     }
   }
 }

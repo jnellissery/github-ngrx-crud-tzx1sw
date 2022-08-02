@@ -90,5 +90,5 @@ export const getAllGames1 = createSelector(
 );
 export const getGame1 = createSelector(
   getGamesState1,
-  (state: State) => state.data
+  (state: State) => state.selected
 );
