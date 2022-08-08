@@ -56,7 +56,7 @@ export class GamesService {
   public update(game: Game): Observable<Game> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-
+    console.log('update', game);
     return this.http.put<Game>(this.URL + '/' + game.id, game, { headers });
   }
 }

@@ -26,7 +26,10 @@ export const reducers: ActionReducerMap<any> = {
   imports: [
     SharedModule,
     GamesRoutingModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot({
+      platforms: platformReducer.reducer,
+      gamereducer: gameReducer.gameReducer,
+    }),
     EffectsModule.forRoot([GameEffects, PlatformEffects]),
     StoreDevtoolsModule.instrument({
       stateSanitizer: stateSanitizer(),

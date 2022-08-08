@@ -45,7 +45,6 @@ export class GameEffects {
       switchMap((id) =>
         this.svc.findById(id).pipe(
           map((res) => {
-            
             if (res) return GetGameSuccessAction({ payload: res });
             else throw Error;
           }),
@@ -63,15 +62,6 @@ export class GameEffects {
         (game) => CreateSuccessAction({ payload: game }),
         catchError((err) => of(CreateFailureAction({ payload: err })))
       )
-    )
-  );
-  updateGame$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(gameActions.UPDATE_GAME),
-      map((action: UpdateGame) => action.payload),
-      switchMap((game) => this.svc.update(game)),
-      map(() => new UpdateGameSuccess()),
-      catchError((err) => [new UpdateGameError(err)])
     )
   );
 
