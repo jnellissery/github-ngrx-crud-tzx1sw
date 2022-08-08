@@ -34,8 +34,7 @@ export class GameEditComponent implements OnInit {
     });
     this.store.select(getGame1).subscribe((game) => {
       if (game != null) {
-        this.game = game;
-        console.log(this.platforms);
+        this.game = { ...game };
         this.platforms = this.platforms.map((p) => {
           const temp: Platform = { ...p };
           temp.checked = game.platforms.indexOf(p.id) >= 0;
@@ -53,7 +52,6 @@ export class GameEditComponent implements OnInit {
     tempplatform = this.platforms;
     let tempgame: Game;
     tempgame = { ...this.game };
-    console.log(tempplatform);
     let index = tempplatform.filter((p) => p.checked === true).map((p) => p.id);
     tempgame.platforms = index;
     this.store.dispatch(UpdateGame({ payload: tempgame }));
